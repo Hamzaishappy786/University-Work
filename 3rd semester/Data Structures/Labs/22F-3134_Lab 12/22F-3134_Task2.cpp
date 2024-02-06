@@ -1,0 +1,347 @@
+//#include <iostream>
+//using namespace std;
+//class Graph_Matrix {
+//private:
+//	int vertices;
+//	bool** adjacency_matrix;
+//public:
+//	Graph_Matrix(int num_vertices) {
+//		vertices = num_vertices;	//initializing vertices
+//		adjacency_matrix = new bool* [num_vertices];	 //putting false(0) in the adjacency matrix
+//		for (int i = 0; i < num_vertices; i++) {
+//			adjacency_matrix[i] = new bool[num_vertices];
+//			for (int j = 0; j < num_vertices; j++) {
+//				adjacency_matrix[i][j] = false;
+//			}
+//		}
+//	}
+//	void add_edge_directed(int from, int to) {
+//		adjacency_matrix[from][to] = true;	//just putting true(1) on one point
+//	}
+//	void add_edge_undirected(int from, int to) {
+//		adjacency_matrix[from][to] = true;	//putting true(1) on two points
+//		adjacency_matrix[to][from] = true;	//making our matrix symmetric
+//	}
+//	void print_graph() {
+//		for (int i = 0; i < vertices; i++) {	//for printing graph
+//			for (int j = 0; j < vertices; j++) {
+//				cout << adjacency_matrix[i][j] << " ";
+//			}
+//			cout << endl;
+//		}
+//	}
+//	void bfs(int start_vertex) {	//breadth first search algorithm
+//		bool* visited = new bool[vertices];	//allocation for keeping track of visited vertices
+//		for (int i = 0; i < vertices; ++i) {
+//			visited[i] = false;		//keeping all of them false in the start
+//		}
+//		//queue
+//		int* queue = new int[vertices];	//for bfs traversal, made a queue
+//		int front = 0, rear = 0;
+//		visited[start_vertex] = true;	//marking the starting vertex as visited
+//		queue[rear] = start_vertex;	//now enqueuing it
+//		rear++;
+//
+//		while (front != rear) {	//traversal
+//			int current_vertex = queue[front++];	//dequeing a vertex
+//			cout << current_vertex << " ";		//printing that vertex
+//
+//			for (int i = 0; i < vertices; ++i) {	//exploring neighbors of that vertex
+//				if (adjacency_matrix[current_vertex][i] == 1 && visited[i] == false) {	//if there is an edge and vertex is not visited
+//					visited[i] = true;		//marking it true
+//					queue[rear] = i;		//and making an edge towards it
+//					rear++;
+//				}
+//			}
+//		}
+//		delete[] visited;	//deallocating memory
+//		delete[] queue;
+//	}
+//	void dfs(int start_vertex) {	//depth first search algorithm
+//		bool* visited = new bool[vertices];	//allocation to keep track of visited vertices
+//		for (int i = 0; i < vertices; ++i) {
+//			visited[i] = false;		//keeping all of them false in the start
+//		}
+//		//stack
+//		int* stack = new int[vertices];	//stack for dfs traversal
+//		int top = -1;
+//		visited[start_vertex] = true;	//starting vertex is marked true for visiting
+//		top++; stack[top] = start_vertex;	//pushing it onto stack
+//		while (top != -1) {
+//			int current_vertex = stack[top--];	//popping vertex from stack
+//			cout << current_vertex << " ";
+//			for (int i = 0; i < vertices; ++i) {	//exploring neighbors of vertex
+//				// If an adjacent vertex is not visited and there is an edge, mark it as visited and push onto the stack
+//				if (adjacency_matrix[current_vertex][i] == 1 && visited[i] == false) {	//if vertex is not visited and there is edge
+//					visited[i] = true;	//mark it visited(true)
+//					top++ ; stack[top] = i;	//pushing it onto the stack
+//				}
+//			}
+//		}
+//		delete[] visited;	//deallocating memory
+//		delete[] stack;
+//	}
+//};
+//class Node {
+//public:
+//	int data;
+//	Node* next;
+//	Node(int value) {
+//		data = value;
+//		next = nullptr;
+//	}
+//};
+//class Graph_list {
+//private:
+//	int vertices;
+//	Node** adjacency_list;
+//
+//public:
+//	Graph_list(int num) {
+//		vertices = num;
+//		adjacency_list = new Node * [vertices];	//list for keeping track of vertices
+//
+//		for (int i = 0; i < vertices; ++i) {
+//			adjacency_list[i] = nullptr;	//nullifying whole list
+//		}
+//	}
+//
+//	void add_edge_directed(int from, int to) {
+//		Node* newNode = new Node(to);	//allocating list to within made list from vertices
+//		newNode->next = adjacency_list[from];	//putting element on next of original from element
+//		adjacency_list[from] = newNode;	//connecting to make a link from original node
+//	}
+//	void add_edge_undirected(int from, int to) {
+//		Node* newNode_from = new Node(to);	//allocating list to within made list from vertices
+//		newNode_from->next = adjacency_list[from];		//putting element on next of original from adjacency list
+//		adjacency_list[from] = newNode_from;	//connecting to make a link from fromNode
+//		Node* newNode_to = new Node(from);	//allocating list from within made list from vertices
+//		newNode_to->next = adjacency_list[to];	//putting element on next of original from adjacency to
+//		adjacency_list[to] = newNode_to;	//connecting to make a link from newNode
+//	}
+//	void print_graph() {
+//		for (int i = 0; i < vertices; ++i) {	//printing list
+//			cout << i << ":-> ";	//node by node
+//			Node* current = adjacency_list[i];
+//			while (current != nullptr) {
+//				cout << current->data << " ";	//data from nodes
+//				current = current->next;
+//			}
+//			cout << endl;
+//		}
+//	}
+//
+//	void bfs(int start_vertex) {
+//		bool* visited = new bool[vertices];
+//		for (int i = 0; i < vertices; ++i) {
+//			visited[i] = false;
+//		}
+//
+//		int* queue = new int[vertices];
+//		int front = 0, rear = 0;
+//
+//		visited[start_vertex] = true;
+//		queue[rear] = start_vertex;
+//		rear++;
+//
+//		while (front != rear) {
+//			int current_vertex = queue[front];
+//			front++;
+//			cout << current_vertex << " ";
+//
+//			Node* temp = adjacency_list[current_vertex];
+//			while (temp != nullptr) {
+//				if (visited[temp->data] == false) {
+//					visited[temp->data] = true;
+//					queue[rear] = temp->data;
+//					rear++;
+//				}
+//				temp = temp->next;
+//			}
+//		}
+//
+//		delete[] visited;
+//		delete[] queue;
+//	}
+//
+//	void dfs(int start_vertex) {
+//		bool* visited = new bool[vertices];
+//		for (int i = 0; i < vertices; ++i) {
+//			visited[i] = false;
+//		}
+//
+//		int* stack = new int[vertices];
+//		int top = -1;
+//
+//		visited[start_vertex] = true;
+//		top++; stack[top] = start_vertex;
+//
+//		while (top != -1) {
+//			int current_vertex = stack[top--];
+//			cout << current_vertex << " ";
+//
+//			Node* temp = adjacency_list[current_vertex];
+//			while (temp != nullptr) {
+//				if (!visited[temp->data]) {
+//					visited[temp->data] = true;
+//					stack[++top] = temp->data;
+//				}
+//				temp = temp->next;
+//			}
+//		}
+//
+//		delete[] visited;
+//		delete[] stack;
+//	}
+//};
+//
+//int main() {
+//	int size, option_matrix_or_list, option_directed_or_undirected;
+//	int from, to, edges, i = 0;
+//	while (true) {
+//		cout << "Enter the number of nodes: ";	cin >> size;
+//		cout << "\n1.Adjacency matrix\n";
+//		cout << "2.Adjacency list\n";
+//		cout << "0.Exit\n";
+//		cout << "\nEnter your choice: ";	cin >> option_matrix_or_list;
+//		if (option_matrix_or_list == 1) {
+//			Graph_Matrix graph(size);
+//			cout << "\n1.Directed\n";
+//			cout << "2.Undirected\n";
+//			cout << "\nEnter your choice: ";	cin >> option_directed_or_undirected;
+//			if (option_directed_or_undirected == 1) {
+//				cout << "\nEnter the total number of edges: ";	cin >> edges;
+//				if (edges <= size * size) {
+//					while (i != edges) {
+//						cout << "Enter the start: ";	cin >> from;
+//						cout << "Enter the end: ";	 cin >> to;
+//						if (from >= size || to >= size) {
+//							cout << "Enter valid starting and ending point.\n";
+//						}
+//						else {
+//							graph.add_edge_undirected(from, to);
+//							i++;
+//						}
+//					}
+//					graph.print_graph();
+//					int vertex = 0;
+//					cout << "\nEnter the vertex: ";	cin >> vertex;
+//					cout << "\nBfs from vertex " << vertex << ": ";		graph.bfs(vertex);
+//					cout << "\nEnter the vertex: ";	cin >> vertex;
+//					cout << "\nDfs from vertex " << vertex << ": ";		graph.dfs(vertex);
+//				}
+//				else {
+//					cout << "Invalid number of edges.\n";
+//				}
+//
+//			}
+//			else if (option_directed_or_undirected == 2) {
+//				cout << "\nEnter the total number of edges: ";	cin >> edges;
+//				if (edges <= size * size) {
+//					while (i != edges) {
+//						cout << "Enter the start: ";	cin >> from;
+//						cout << "Enter the end: ";	 cin >> to;
+//						if (from >= size || to >= size) {
+//							cout << "Enter valid starting and ending point.\n";
+//						}
+//						else {
+//							graph.add_edge_undirected(from, to);
+//							i++;
+//						}
+//					}
+//					graph.print_graph();
+//					int vertex = 0;
+//					cout << "\nEnter the vertex: ";	cin >> vertex;
+//					cout << "\nBfs from vertex " << vertex << ": ";		graph.bfs(vertex);
+//					cout << "\nEnter the vertex: ";	cin >> vertex;
+//					cout << "\nDfs from vertex " << vertex << ": ";		graph.dfs(vertex);
+//				}
+//				else {
+//					cout << "Invalid number of edges.\n";
+//				}
+//			}
+//			else {
+//				cout << "Invalid option.\n";
+//				int choice;
+//				cout << "\nEnter 0 to end the program.\n";
+//				cout << "\nEnter any number to start again.";
+//				cout << "\nEnter your choice: ";	cin >> choice;
+//				if (choice == 0) {
+//					cout << "\nThanks for using our code.\n";
+//					break;
+//				}
+//			}
+//		}
+//		else if (option_matrix_or_list == 2) {
+//			Graph_list graph(size);
+//			cout << "\n1.Directed\n";
+//			cout << "2.Undirected\n";
+//			cout << "\nEnter your choice: ";	cin >> option_directed_or_undirected;
+//			if (option_directed_or_undirected == 1) {
+//				cout << "\nEnter the total number of edges: ";	cin >> edges;
+//				if (edges <= size * size) {
+//					while (i != edges) {
+//						cout << "Enter the start: ";	cin >> from;
+//						cout << "Enter the end: ";	 cin >> to;
+//						if (from >= size || to >= size) {
+//							cout << "Enter valid starting and ending point.\n";
+//						}
+//						else {
+//							graph.add_edge_undirected(from, to);
+//							i++;
+//						}
+//					}
+//					graph.print_graph();
+//					int vertex = 0;
+//					cout << "\nEnter the vertex: ";	cin >> vertex;
+//					cout << "\nBfs from vertex " << vertex << ": ";		graph.bfs(vertex);
+//					cout << "\nEnter the vertex: ";	cin >> vertex;
+//					cout << "\nDfs from vertex " << vertex << ": ";		graph.dfs(vertex);
+//				}
+//				else {
+//					cout << "Invalid number of edges.\n";
+//				}
+//			}
+//			else if (option_directed_or_undirected == 2) {
+//				cout << "\nEnter the total number of edges: ";	cin >> edges;
+//				if (edges <= size * size) {
+//					while (i != edges) {
+//						cout << "Enter the start: ";	cin >> from;
+//						cout << "Enter the end: ";	 cin >> to;
+//						if (from >= size || to >= size) {
+//							cout << "Enter valid starting and ending point.\n";
+//						}
+//						else {
+//							graph.add_edge_undirected(from, to);
+//							i++;
+//						}
+//					}
+//					graph.print_graph();
+//					int vertex = 0;
+//					cout << "\nEnter the vertex: ";	cin >> vertex;
+//					cout << "\nBfs from vertex " << vertex << ": ";		graph.bfs(vertex);
+//					cout << "\nEnter the vertex: ";	cin >> vertex;
+//					cout << "\nDfs from vertex " << vertex << ": ";		graph.dfs(vertex);
+//				}
+//				else {
+//					cout << "Invalid number of edges.\n";
+//				}
+//				cout << "Invalid option.\n";
+//			}
+//			int choice;
+//			cout << "\nEnter 0 to end the program.\n";
+//			cout << "\nEnter any number to start again.";
+//			cout << "\nEnter your choice: ";	cin >> choice;
+//			if (choice == 0) {
+//				cout << "\nThanks for using our code.\n";
+//				break;
+//			}
+//		}
+//		else if (option_matrix_or_list == 0) {
+//			cout << "Thanks for using our code.\n";
+//			break;
+//		}
+//		system("pause");
+//	}
+//	system("pause");
+//}
